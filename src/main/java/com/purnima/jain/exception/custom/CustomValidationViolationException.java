@@ -20,8 +20,7 @@ public class CustomValidationViolationException extends RuntimeException {
     }
 
     private static String generateMessage(List<CustomValidationError> customValidationErrorList) {
-        return "Operation could not succeed due to invalid input " +
-        		customValidationErrorList;
+        return "Operation could not succeed due to invalid input " + customValidationErrorList;
     }
     
     public List<FieldError> getFieldErrors() {

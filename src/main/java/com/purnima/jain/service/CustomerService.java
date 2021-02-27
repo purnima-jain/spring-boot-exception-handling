@@ -23,19 +23,12 @@ public class CustomerService {
 	public Customer saveCustomer(Customer customer) {
 		Customer savedCustomer = customerRepository.saveCustomer(customer);
 		return savedCustomer;
-	}
+	}	
 	
-//	public List<Customer> getCustomerCollection(List<Integer> customerIds) {
-//		List<Customer> customers = new ArrayList<>();
-//
-//        for (Integer customerId : customerIds) {
-//        	Customer customer = customerRepository.getCustomerById(customerId).orElse(null);
-//            if (customer != null) {
-//            	customers.add(customer);
-//            }
-//        }
-//        return customers;
-//	}
+	public Optional<Customer> deleteCustomerById(Integer customerId) {
+		Optional<Customer> deletedCustomerOptional = customerRepository.deleteCustomerById(customerId);		
+		return deletedCustomerOptional;
+	}
 	
 	public List<Customer> getCustomerCollectionByFirstName(String firstName) {
 		return customerRepository.getCustomersByFirstName(firstName);

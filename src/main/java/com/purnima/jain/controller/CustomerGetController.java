@@ -34,6 +34,7 @@ public class CustomerGetController {
 	// Sample Input: http://localhost:8080/customers/abcd
 	// Sample Input: http://localhost:8080/customers/12345
 	// Sample Input (Valid: 404-Not Found): http://localhost:8080/customers/1409
+	// Sample Input (Valid: 405-Method Not Allowed): PUT http://localhost:8080/customers/1408
 	@GetMapping(value = "/customers/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CustomerGetResponseDto> getCustomerById(@PathVariable("customerId") String customerId) {
 		log.info("Input Customer Id :: {}", customerId);
@@ -74,14 +75,6 @@ public class CustomerGetController {
 			throw new CustomValidationViolationException(customValidationErrorList);
 		}
 	}
-	
-//	@GetMapping(value = "/customers/collection")
-//    public ResponseEntity<List<CustomerGetResponseDto>> getCustomerCollection(@RequestBody CustomerGetRequestSearchCriteriaCustomerIdsDto customerGetRequestSearchCriteriaCustomerIdsDto) {
-//		List<Customer> customers = customerService.getCustomerCollection(customerGetRequestSearchCriteriaCustomerIdsDto.getCustomerIds());
-//		List<CustomerGetResponseDto> customerGetResponseDtoList = customers.stream().map(customer -> new CustomerGetResponseDto(customer)).collect(Collectors.toList());
-//		
-//		return ResponseEntity.ok().body(customerGetResponseDtoList); 
-//    }
 	
 	// Sample Input (Valid: 200-Ok): http://localhost:8080/customers/collection?firstName=Eden
 	// Sample Input (Valid: 400-Bad Request): http://localhost:8080/customers/collection

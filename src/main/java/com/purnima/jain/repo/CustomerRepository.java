@@ -53,6 +53,18 @@ public class CustomerRepository {
 		List<CustomerEntity> customerEntity = customerJpaRepository.findByFirstName(firstName);
 		return customerEntity.stream().map(this::customerEntityToCustomer).collect(Collectors.toList());
 	}
+	
+	public Optional<Customer> deleteCustomerById(Integer customerId) {
+		Optional<Customer> deletedCustomerOptional = Optional.empty();
+		Optional<CustomerEntity> customerEntity = customerJpaRepository.findById(customerId);
+		
+		if(customerEntity.isPresent()) {
+			customerJpaRepository.deleteById(customerId);
+			deletedCustomerOptional = customerEntity.map(this::customerEntityToCustomer);
+		}
+		
+		return deletedCustomerOptional;		
+	}
 
 
 }
