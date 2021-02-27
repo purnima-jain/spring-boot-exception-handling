@@ -3,12 +3,14 @@ package com.purnima.jain.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.purnima.jain.domain.Customer;
@@ -71,5 +73,24 @@ public class CustomerGetController {
 		if(!customValidationErrorList.isEmpty()) {
 			throw new CustomValidationViolationException(customValidationErrorList);
 		}
+	}
+	
+//	@GetMapping(value = "/customers/collection")
+//    public ResponseEntity<List<CustomerGetResponseDto>> getCustomerCollection(@RequestBody CustomerGetRequestSearchCriteriaCustomerIdsDto customerGetRequestSearchCriteriaCustomerIdsDto) {
+//		List<Customer> customers = customerService.getCustomerCollection(customerGetRequestSearchCriteriaCustomerIdsDto.getCustomerIds());
+//		List<CustomerGetResponseDto> customerGetResponseDtoList = customers.stream().map(customer -> new CustomerGetResponseDto(customer)).collect(Collectors.toList());
+//		
+//		return ResponseEntity.ok().body(customerGetResponseDtoList); 
+//    }
+	
+	// Sample Input (Valid: 200-Ok): http://localhost:8080/customers/collection?firstName=Eden
+	// Sample Input (Valid: 400-Bad Request): http://localhost:8080/customers/collection
+	// Throws MissingServletRequestParameterException if "required" "@RequestParam" firstName is not present
+	@GetMapping(value = "/customers/collection")
+	public ResponseEntity<List<CustomerGetResponseDto>> getCustomerCollectionByFirstName(@RequestParam(name = "firstName", required = true) String firstName) {
+		List<Customer> customers = customerService.getCustomerCollectionByFirstName(firstName);
+		List<CustomerGetResponseDto> customerGetResponseDtoList = customers.stream().map(customer -> new CustomerGetResponseDto(customer)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok().body(customerGetResponseDtoList); 
 	}
 }

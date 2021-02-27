@@ -4,7 +4,11 @@ package com.purnima.jain.exception.apierror;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import javax.validation.ConstraintViolation;
+
+import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -86,6 +90,23 @@ public class ApiError {
 
     public void addValidationError(List<ObjectError> globalErrors) {
         globalErrors.forEach(this::addValidationError);
+    }
+    
+    /**
+     * Utility method for adding error of ConstraintViolation. Usually when a @Validated validation fails. Refer: CustomerPostAddAllController.java
+     *
+     * @param cv the ConstraintViolation
+     */
+    private void addValidationError(ConstraintViolation<?> cv) {
+        this.addValidationError(
+                cv.getRootBeanClass().getSimpleName(),
+                ((PathImpl) cv.getPropertyPath()).getLeafNode().asString(),
+                cv.getInvalidValue(),
+                cv.getMessage());
+    }
+
+    public void addValidationErrors(Set<ConstraintViolation<?>> constraintViolations) {
+        constraintViolations.forEach(this::addValidationError);
     }
     
 }

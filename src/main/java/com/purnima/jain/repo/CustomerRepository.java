@@ -1,6 +1,8 @@
 package com.purnima.jain.repo;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,6 +47,11 @@ public class CustomerRepository {
 		customerEntity.setAge(customer.getAge());
 		
 		return customerEntity;		
+	}
+	
+	public List<Customer> getCustomersByFirstName(String firstName) {
+		List<CustomerEntity> customerEntity = customerJpaRepository.findByFirstName(firstName);
+		return customerEntity.stream().map(this::customerEntityToCustomer).collect(Collectors.toList());
 	}
 
 
