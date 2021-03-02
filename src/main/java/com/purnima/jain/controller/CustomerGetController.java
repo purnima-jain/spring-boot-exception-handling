@@ -34,7 +34,7 @@ public class CustomerGetController {
 	// Sample Input: http://localhost:8080/customers/abcd
 	// Sample Input: http://localhost:8080/customers/12345
 	// Sample Input (Valid: 404-Not Found): http://localhost:8080/customers/1409
-	// Sample Input (Valid: 405-Method Not Allowed): PUT http://localhost:8080/customers/1408
+	// Sample Input (Valid: 405-Method Not Allowed): PATCH http://localhost:8080/customers/1408
 	@GetMapping(value = "/customers/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CustomerGetResponseDto> getCustomerById(@PathVariable("customerId") String customerId) {
 		log.info("Input Customer Id :: {}", customerId);

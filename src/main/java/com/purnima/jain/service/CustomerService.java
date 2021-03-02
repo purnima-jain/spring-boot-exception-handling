@@ -23,7 +23,7 @@ public class CustomerService {
 	public Customer saveCustomer(Customer customer) {
 		Customer savedCustomer = customerRepository.saveCustomer(customer);
 		return savedCustomer;
-	}	
+	}
 	
 	public Optional<Customer> deleteCustomerById(Integer customerId) {
 		Optional<Customer> deletedCustomerOptional = customerRepository.deleteCustomerById(customerId);		
@@ -32,5 +32,10 @@ public class CustomerService {
 	
 	public List<Customer> getCustomerCollectionByFirstName(String firstName) {
 		return customerRepository.getCustomersByFirstName(firstName);
-	}	
+	}
+	
+	public Customer updateCustomer(Customer customer) {
+		Customer updatedCustomer = customerRepository.saveCustomer(customer);
+		return updatedCustomer;
+	}
 }
